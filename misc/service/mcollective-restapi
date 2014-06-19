@@ -1,13 +1,13 @@
 #!/bin/sh
 #
-# kermit-restmco     A simple REST server used to communicate with Mcollective
+# mcollective-restapi     A simple REST server used to communicate with Mcollective
 #
 # chkconfig: - 95 5
 # description: Enable a simple REST server used to communicate with Mcollective
 #
 
 ### BEGIN INIT INFO
-# Provides:          kermit-restmco
+# Provides:          mcollective-restapi
 # Required-Start:    $network
 # Required-Stop:     $network
 # Description:       REST server

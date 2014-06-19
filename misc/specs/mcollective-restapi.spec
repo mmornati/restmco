@@ -1,6 +1,6 @@
-Name: kermit-restmco 
+Name: mcollective-restapi
 Summary: A simple REST server used to communicate with Mcollective 
-Version: 2.2
+Version: 3.0
 Release: 1%{?dist}
 License: GPLv3
 Group: System Tools 
@@ -24,51 +24,39 @@ A simple REST server in ruby and sinatra, used to communicate with Mcollective
 
 %install
 rm -rf %{buildroot}
-install -d -m 755 %{buildroot}/usr/local/bin/kermit/restmco
-install -d -m 755 %{buildroot}/usr/local/bin/kermit/restmco/misc
+install -d -m 755 %{buildroot}/usr/share/mcollective-restapi
 install -d -m 755 %{buildroot}/etc/init.d
-install -d -m 755 %{buildroot}/etc/kermit
+install -d -m 755 %{buildroot}/etc/mcollective-restapi
 install -d -m 755 %{buildroot}/var/log
-install -d -m 755 %{buildroot}/var/www/restmco
-install -d -m 755 %{buildroot}/var/www/restmco/public
-install -d -m 755 %{buildroot}/var/www/restmco/tmp
-install mc-rpc-restserver.rb %{buildroot}/usr/local/bin/kermit/restmco
-install mc-rpc-restserver-control.rb %{buildroot}/usr/local/bin/kermit/restmco
-install misc/service/kermit-restmco %{buildroot}/etc/init.d 
-install misc/sysconfig/kermit-restmco.cfg %{buildroot}/etc/kermit
-install misc/httpd/restmco.conf %{buildroot}/usr/local/bin/kermit/restmco/misc
-install misc/selinux/kermitrest.te %{buildroot}/usr/local/bin/kermit/restmco/misc
-install misc/selinux/applyse.sh %{buildroot}/usr/local/bin/kermit/restmco/misc
-install misc/log/kermit-restmco.log %{buildroot}/var/log 
-install mc-rpc-restserver.rb %{buildroot}/var/www/restmco
-install passenger/config.ru %{buildroot}/var/www/restmco
-install passenger/tmp/restart.txt %{buildroot}/var/www/restmco/tmp
+install app.rb %{buildroot}/usr/share/mcollective-restapi
+install config.ru %{buildroot}/usr/share/mcollective-restapi
+%{__cp} -R helpers %{buildroot}/usr/share/mcollective-restapi
+%{__cp} -R routes %{buildroot}/usr/share/mcollective-restapi
 
+
+install misc/service/mcollective-restapi %{buildroot}/etc/init.d 
+install misc/sysconfig/mcollective-restapi.cfg %{buildroot}/etc/mcollective-restapi
 
 %clean
 rm -rf %{buildroot}
 
 %pre
-mkdir -p /usr/local/bin/kermit/restmco
+#mkdir -p /usr/local/bin/kermit/restmco
 
 %files
 %defattr(0644,root,root,-)
-%attr(0755, root, root) /usr/local/bin/kermit/restmco/mc-rpc-restserver-control.rb
-/usr/local/bin/kermit/restmco/mc-rpc-restserver.rb
-/usr/local/bin/kermit/restmco/misc/restmco.conf
-/usr/local/bin/kermit/restmco/misc/kermitrest.te
-%attr(0755,root,root) /usr/local/bin/kermit/restmco/misc/applyse.sh
-%attr(0755,root,root) /etc/init.d/kermit-restmco
-%config(noreplace) %attr(0755,root,root) /etc/kermit/kermit-restmco.cfg
-%attr(0644,nobody,nobody) /var/log/kermit-restmco.log
-%attr(0755,root,root) /var/www/restmco
-/var/www/restmco/mc-rpc-restserver.rb
-/var/www/restmco/config.ru
-%attr(0755,root,root) /var/www/restmco/public
-%attr(0755,root,root) /var/www/restmco/tmp
-/var/www/restmco/tmp/restart.txt
+%attr(0755, root, root) /usr/share/mcollective-restapi
+/usr/share/mcollective-restapi/app.rb
+/usr/share/mcollective-restapi/config.ru
+/usr/share/mcollective-restapi/helpers/*
+/usr/share/mcollective-restapi/routes/*
+%attr(0755,root,root) /etc/init.d/mcollective-restapi
+%config(noreplace) %attr(0755,root,root) /etc/mcollective-restapi/mcollective-restapi.cfg
 
 %changelog
+* Thu Jun 19 2014 Marco Mornati
+- Code Refactor: allow restmco module
+- Name Refactor: use restmco outside KermIT Env
 * Sun Nov 11 2012 Louis Coilliot
 - new method for calling mco rpcclient
 * Thu Nov 8 2012 Marco Mornati

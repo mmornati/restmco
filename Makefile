@@ -6,8 +6,8 @@ MESSAGESPOT=po/messages.pot
 
 TOPDIR = $(shell pwd)
 DATE="date +%Y%m%d"
-PROGRAMNAME=kermit-restmco
-VERSION=$(shell grep "Version:" ./misc/specs/kermit-restmco.spec)
+PROGRAMNAME=mcollective-restapi
+VERSION=$(shell grep "Version:" ./misc/specs/mcollective-restapi.spec)
 RELEASE=`expr substr '${VERSION}' 10 5`
 TMPDIR=/tmp
 BUILDDIR=build
@@ -48,7 +48,6 @@ clean:
 	-rm -rf dist/ 
 	-rm -rf rpm-build/
 	-rm -rf $(TMPDIR)/$(BUILDDIR)
-	-rm -rf /tmp/sqlite.db
 
 clean_hard:
 
@@ -72,7 +71,7 @@ restart:
 recombuild: install_harder restart
 
 clean_rpms:
-	-rpm -e kermit-restmco
+	-rpm -e mcollective-restapi.spec
 
 sdist: messages
 
@@ -101,4 +100,4 @@ rpms: build manpage sdist
 	--define "_specdir %{_topdir}" \
 	--define "_sourcedir  %{_topdir}" \
 	--define "vendor Think" \
-	-ba misc/specs/kermit-restmco.spec
+	-ba misc/specs/mcollective-restapi.spec
