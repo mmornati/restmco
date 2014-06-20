@@ -1,11 +1,11 @@
 Name: mcollective-restapi
 Summary: A simple REST server used to communicate with Mcollective 
-Version: 3.0
+Version: 3.2
 Release: 1%{?dist}
 License: GPLv3
 Group: System Tools 
 Source0: %{name}-%{version}.tar.gz 
-Requires: rubygem-daemons, rubygem-sinatra, mcollective-common, rubygem-inifile
+Requires: rubygem-daemons, rubygem-sinatra, mcollective-common, rubygem-inifile, rubygem-puma
 %if "%dist" == ".el5"
 Requires: selinux-policy-devel
 %else 

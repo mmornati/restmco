@@ -37,17 +37,11 @@ module RestMCOConfig
 
     def self.initialize_mcollective
         @@mcollective_config = {
-            #"MCO_CONFIG"      => @ini['mcollective'][MCO_CONFIG] unless @ini['mcollective'][MCO_CONFIG]).nil?, #|| '/etc/mcollective/client.cfg',
-            #"MCO_TIMEOUT"     => @ini['mcollective'][MCO_TIMEOUT] unless @ini['mcollective'][MCO_TIMEOUT]).nil, # || 10, 
-            #"MCO_DISCOVTMOUT" => @ini['mcollective'][MCO_DISCOVTMOUT] unless @ini['mcollective'][MCO_DISCOVTMOUT].nil?, # || 4,
-            #"MCO_DEBUG"       => @ini['mcollective'][MCO_DEBUG] unless @ini['mcollective'][MCO_DEBUG].nill?, # || false,
-            #"MCO_COLLECTIVE"  => @ini['mcollective'][MCO_COLLECTIVE] unless @ini['mcollective'][MCO_COLLECTIVE].nil?, #|| nil,
-            "MCO_CONFIG"      => '/etc/mcollective/client.cfg',
-            "MCO_TIMEOUT"     => 10,
-            "MCO_DISCOVTMOUT" => 4,
-            "MCO_DEBUG"       => false,
-            "MCO_COLLECTIVE"  => nil
-
+            'MCO_CONFIG'      => @ini['mcollective']['MCO_CONFIG'], #|| '/etc/mcollective/client.cfg',
+            'MCO_TIMEOUT'     => @ini['mcollective']['MCO_TIMEOUT'].to_i, # || 10, 
+            'MCO_DISCOVTMOUT' => @ini['mcollective']['MCO_DISCOVTMOUT'].to_i, # || 4,
+            'MCO_DEBUG'       => @ini['mcollective']['MCO_DEBUG'], # || false,
+            'MCO_COLLECTIVE'  => @ini['mcollective']['MCO_COLLECTIVE'], #|| nil,
         }
     end
 
