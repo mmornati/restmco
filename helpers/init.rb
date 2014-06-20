@@ -1,3 +1,6 @@
-require_relative 'config'
-require_relative 'hash'
-require_relative 'utils'
+require_relative 'config' if RUBY_VERSION >= "1.9"
+require File.join(File.dirname(__FILE__), 'config') if RUBY_VERSION < "1.9"
+require_relative 'hash' if RUBY_VERSION >= "1.9"
+require File.join(File.dirname(__FILE__), 'hash') if RUBY_VERSION < "1.9"
+require_relative 'utils' if RUBY_VERSION >= "1.9"
+require File.join(File.dirname(__FILE__), 'utils') if RUBY_VERSION < "1.9"

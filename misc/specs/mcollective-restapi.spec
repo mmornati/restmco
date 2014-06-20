@@ -30,6 +30,7 @@ install -d -m 755 %{buildroot}/etc/mcollective-restapi
 install -d -m 755 %{buildroot}/var/log
 install app.rb %{buildroot}/usr/share/mcollective-restapi
 install config.ru %{buildroot}/usr/share/mcollective-restapi
+install puma.rb %{buildroot}/usr/share/mcollective-restapi
 %{__cp} -R helpers %{buildroot}/usr/share/mcollective-restapi
 %{__cp} -R routes %{buildroot}/usr/share/mcollective-restapi
 
@@ -47,6 +48,7 @@ rm -rf %{buildroot}
 %defattr(0644,root,root,-)
 %attr(0755, root, root) /usr/share/mcollective-restapi
 /usr/share/mcollective-restapi/app.rb
+/usr/share/mcollective-restapi/puma.rb
 /usr/share/mcollective-restapi/config.ru
 /usr/share/mcollective-restapi/helpers/*
 /usr/share/mcollective-restapi/routes/*

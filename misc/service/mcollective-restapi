@@ -15,9 +15,9 @@
 ### END INIT INFO
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-NAME=mc-rpc-restserver-control.rb
-CONTROL=/usr/local/bin/kermit/restmco/${NAME}
-DESC=kermit-restmco
+NAME=mcollective-restapi
+CONTROL='/usr/bin/pumactl -F /usr/share/mcollective-restapi/puma.rb'
+DESC=mcollective-restapi
 ROTATE_SUFFIX=
 
 LOCK_FILE=/var/lock/subsys/$NAME

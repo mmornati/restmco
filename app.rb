@@ -2,7 +2,8 @@
 require 'sinatra'
 require 'rubygems' if RUBY_VERSION < "1.9"
 
-require_relative 'helpers/init'
+require_relative 'helpers/init' if RUBY_VERSION >= "1.9"
+require File.join(File.dirname(__FILE__), 'helpers/init') if RUBY_VERSION < "1.9"
 
 class RestMCO < Sinatra::Application
     include RestMCOConfig
@@ -24,4 +25,5 @@ class RestMCO < Sinatra::Application
 
 end
 
-require_relative 'routes/init'
+require_relative 'routes/init' if RUBY_VERSION >= "1.9"
+require File.join(File.dirname(__FILE__), 'routes/init') if RUBY_VERSION < "1.9"
