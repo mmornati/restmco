@@ -3,24 +3,24 @@ class RestMCO < Sinatra::Application
     
     post '/mcollective/:agent/:action/' do
         content_type :json
-        RestMCOConfig.restmco_log.debug "Calling /mcollective url Agent: #{params[:agent]} Action:#{params[:action]}"
+        RestMCOConfig.logger.debug "Calling /mcollective url Agent: #{params[:agent]} Action:#{params[:action]}"
         body_content = request.body.read
         data = (body_content.nil? or body_content.empty?) ? {} : JSON.parse(body_content)
         data.recursive_symbolize_keys!
-        RestMCOConfig.restmco_log.debug "JSON Data: #{JSON.dump(data)}"
+        RestMCOConfig.logger.debug "JSON Data: #{JSON.dump(data)}"
         begin
             mc = MCollective::RPC::Client.new(params[:agent], 
-                :configfile => RestMCOConfig.get_mco_config["MCO_CONFIG"], 
+                :configfile => RestMCOConfig.get["MCO_CONFIG"], 
                 :options => {
                     :verbose      => false,
                     :progress_bar => false,
-                    :timeout      => RestMCOConfig.get_mco_config["MCO_TIMEOUT"],
-                    :config       => RestMCOConfig.get_mco_config["MCO_CONFIG"],
+                    :timeout      => RestMCOConfig.get["MCO_TIMEOUT"],
+                    :config       => RestMCOConfig.get["MCO_CONFIG"],
                     :filter       => MCollective::Util.empty_filter,
-                    :collective   => RestMCOConfig.get_mco_config["MCO_COLLECTIVE"],
+                    :collective   => RestMCOConfig.get["MCO_COLLECTIVE"],
                 })
         rescue Exception => e
-            RestMCOConfig.restmco_log.error e.message
+            RestMCOConfig.logger.error e.message
         end
         if mc.nil?
             return JSON.dump([{"sender"=>"ERROR","statuscode"=>1,"statusmsg"=>"ERROR","data"=>{"message"=>e.message}}])
@@ -42,8 +42,8 @@ class RestMCO < Sinatra::Application
         end
     
         json_response = JSON.dump(mc.send(params[:action], data[:parameters]).map{|r| r.results})
-        RestMCOConfig.restmco_log.info "Command Agent: #{params[:agent]} Action: #{params[:action]} executed"
-        RestMCOConfig.restmco_log.debug "Response received: #{json_response}"
+        RestMCOConfig.logger.info "Command Agent: #{params[:agent]} Action: #{params[:action]} executed"
+        RestMCOConfig.logger.debug "Response received: #{json_response}"
         json_response
     end
 end

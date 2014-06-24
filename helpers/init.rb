@@ -1,6 +1,6 @@
-require_relative 'config' if RUBY_VERSION >= "1.9"
-require File.join(File.dirname(__FILE__), 'config') if RUBY_VERSION < "1.9"
-require_relative 'hash' if RUBY_VERSION >= "1.9"
-require File.join(File.dirname(__FILE__), 'hash') if RUBY_VERSION < "1.9"
-require_relative 'utils' if RUBY_VERSION >= "1.9"
-require File.join(File.dirname(__FILE__), 'utils') if RUBY_VERSION < "1.9"
+#Load all helpers. Useful to install/add plugins
+#
+Dir.glob(File.join(File.dirname(__FILE__), "*.rb")).each do |file|
+    next if __FILE__ == file
+    require file
+end
